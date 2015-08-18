@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+require 'start/bootstrap.php';
+
+// Make the DB available using static methods. $db comes from the bootstrapper.
+$db->setAsGlobal();
+
+$application = new Application();
+
+// Commands
+$application->add(new \MySociety\Slurp\Command\RetrieveCommand());
+
+$application->run();

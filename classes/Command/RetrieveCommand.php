@@ -49,9 +49,9 @@ class RetrieveCommand extends Command
             foreach ($instances as $instance) {
 
                 if (!$input->getOption('onlyDue')
-                    OR (
+                    || (
                         $input->getOption('onlyDue')
-                        AND ( strtotime($instance->last_retrieved) <= time() - $instance->update_interval * 3600 )
+                        && ( strtotime($instance->last_retrieved) <= time() - $instance->update_interval * 3600 )
                     )
                 ) {
 

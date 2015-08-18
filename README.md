@@ -2,12 +2,14 @@
 
 A service to retrieve stats from various instances of mySociety sites.
 
-[![Build Status](https://img.shields.io/scrutinizer/build/g/mysociety/slurp.svg)](https://scrutinizer-ci.com/g/mysociety/slurp/)
-[![Code Quality](https://img.shields.io/scrutinizer/g/mysociety/slurp.svg)](https://scrutinizer-ci.com/g/mysociety/slurp/)
+[![Build Status](https://scrutinizer-ci.com/g/mysociety/slurp/badges/build.png?b=master)](https://scrutinizer-ci.com/g/mysociety/slurp/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mysociety/slurp/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mysociety/slurp/?branch=master)
 
 ## Running
 
-Use `./commander` to retrieve stats. `./commander retrieve:one {{id}}`, or `./commander retrieve:all`.
+* `./commander retrieve`: Get the latest stats from all the instances.
+* `./commander retrieve {{id}}`: Get the latest stats from the instance with ID `{{id}}`.
+* `./commander retrieve --onlyDue`: Only get stats from instances which are due to be retrieved.
 
 ## Developing
 

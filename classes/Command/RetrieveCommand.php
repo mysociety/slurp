@@ -51,20 +51,20 @@ class RetrieveCommand extends Command
                 if (!$input->getOption('onlyDue')
                     || (
                         $input->getOption('onlyDue')
-                        && ( strtotime($instance->last_retrieved) <= time() - $instance->update_interval * 3600 )
+                        && ( strtotime($instance['last_retrieved']) <= time() - $instance['update_interval'] * 3600 )
                     )
                 ) {
 
-                    $output->writeln('<info>Instance ' . $instance->id . ' is using "' . $instance->adapter . '" adapter on endpoint "' . $instance->endpoint . '".</info>');
+                    $output->writeln('<info>Instance ' . $instance['id'] . ' is using "' . $instance['adapter']. '" adapter on endpoint "' . $instance['endpoint'] . '".</info>');
 
                     // Try get the necessary site adapter?
-                    $adapterClassPath = 'MySociety\\Slurp\\Adapter\\' . $instance->adapter . 'Adapter';
-                    $adapter = new $adapterClassPath($instance->id, $client, $instance->endpoint);
+                    $adapterClassPath = 'MySociety\\Slurp\\Adapter\\' . $instance['adapter'] . 'Adapter';
+                    $adapter = new $adapterClassPath($instance['id'], $client, $instance['endpoint']);
 
                     try {
                         $adapter->parseBody();
                         Capsule::table('site_instances')
-                            ->where('id', $instance->id)
+                            ->where('id', $instance['id'])
                             ->update([
                                 'last_retrieved' => date('Y-m-d H:i:s')
                             ]);
@@ -74,7 +74,7 @@ class RetrieveCommand extends Command
                     }
 
                 } else {
-                    $output->writeln('<info>Skipping instance ' . $instance->id . '.</info>');
+                    $output->writeln('<info>Skipping instance ' . $instance['id'] . '.</info>');
                 }
 
             }

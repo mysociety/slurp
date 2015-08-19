@@ -51,7 +51,7 @@ class RetrieveCommand extends Command
                 if (!$input->getOption('onlyDue')
                     || (
                         $input->getOption('onlyDue')
-                        && ( strtotime($instance['last_retrieved']) <= time() - $instance['update_interval'] * 3600 )
+                        && ( strtotime($instance['last_retrieved']) <= ( time() - $instance['update_interval'] * 3600 ) + 300 )
                     )
                 ) {
 

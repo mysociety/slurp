@@ -59,18 +59,23 @@ class RetrieveCommand extends Command
 
                     // Try get the necessary site adapter?
                     $adapterClassPath = 'MySociety\\Slurp\\Adapter\\' . $instance['adapter'] . 'Adapter';
-                    $adapter = new $adapterClassPath($instance['id'], $client, $instance['endpoint']);
+                    if (class_exists($adapterClassPath)) {
+                        $adapter = new $adapterClassPath;
 
-                    try {
-                        $adapter->parseBody();
-                        Capsule::table('site_instances')
-                            ->where('id', $instance['id'])
-                            ->update([
-                                'last_retrieved' => date('Y-m-d H:i:s')
-                            ]);
-                        $output->writeln('<comment>Success!</comment>');
-                    } catch (\Exception $e) {
-                        $output->writeln('<error>Something seems to have gone wrong: ' . $e->getMessage() . ' (' . get_class($e) . ')</error>');
+                        try {
+                            $adapter->parseBody($instance['id'], $client, $instance['endpoint']);
+                            Capsule::table('site_instances')
+                                ->where('id', $instance['id'])
+                                ->update([
+                                    'last_retrieved' => date('Y-m-d H:i:s')
+                                ]);
+                            $output->writeln('<comment>Success!</comment>');
+                        } catch (\Exception $e) {
+                            $output->writeln('<error>Something seems to have gone wrong: ' . $e->getMessage() . ' (' . get_class($e) . ')</error>');
+                        }
+
+                    } else {
+                        $output->writeln('<error>Cannot find adapter ' . $instance['adapter'] . ' for instance ' . $instance['id'] . '!</error>');
                     }
 
                 } else {

@@ -1,0 +1,6 @@
+# Slurp Cron Jobs
+
+MAILTO=cron-slurp@mysociety.org
+
+# Once an hour, go retrieve things which are due
+5 * * * * slurp /data/vhost/slurp.mysociety.org/slurp/commander retrieve --onlyDue
